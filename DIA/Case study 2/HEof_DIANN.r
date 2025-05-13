@@ -93,12 +93,12 @@ for(i.Contrasts in Contrasts){
         
         if(any(is.na(df.temp))){
             #df.temp <- log2(df.temp+1)
-            df.temp <- impSeq(df.temp)
+            df.temp <-  impute.MinDet(df.temp)
             df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
         }else{
             #df.temp[df.temp == 0 ] <- NA
             df.temp <- log2(df.temp+1)
-            df.temp <- impSeq(df.temp)
+            df.temp <-  impute.MinDet(df.temp)
             df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
         }
         
