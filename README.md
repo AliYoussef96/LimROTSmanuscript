@@ -20,3 +20,10 @@ The script `evaluate.r` is used to calculate the evaluation metrics used in the 
 
 The same procedure applies to Case Studies 2, 3, and 4.
 
+## Analysis of the UPenn Cohort
+
+For the Analysis of the UPenn Cohort, the data can be downloaded from [https://www.synapse.org/Synapse:syn20933797/wiki/596247](https://www.synapse.org/Synapse:syn20933797/wiki/596247). 
+
+The script includes code for preprocessing and analyzing the data using LimROTS, limma, and ROTS.
+
+
