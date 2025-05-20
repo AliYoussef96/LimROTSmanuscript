@@ -277,10 +277,9 @@ for(i.file in results.files){
     
     metrics.all <- cbind(metrics , metrics.all)
     
+
+
     }
 }
-
 write.csv(metrics.all , paste0("metrics_Maxquant//" , "FDR_" , fdr_threshold ))
 
-    }
-}
