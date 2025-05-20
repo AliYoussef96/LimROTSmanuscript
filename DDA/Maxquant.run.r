@@ -1,6 +1,6 @@
 #######################################################
 # Title: Multi-method Differential Protein Analysis
-# Author: [Your Name]
+# Author: Ali Mostafa Anwar
 # Description: Applies LimROTS, ROTS, limma, SAM, t-test, and ANOVA
 #              to protein intensity data from Maxquant
 # Usage: See README.md or run line-by-line
