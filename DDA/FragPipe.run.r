@@ -2,7 +2,7 @@
 # Title: Multi-method Differential Protein Analysis
 # Author: [Your Name]
 # Description: Applies LimROTS, ROTS, limma, SAM, t-test, and ANOVA
-#              to protein intensity data from MaxQuant
+#              to protein intensity data from FragPipe
 # Requirements: R (≥ 4.0), Bioconductor
 # Usage: See README.md or run line-by-line
 #######################################################
@@ -18,9 +18,9 @@ library(imputeLCMD)
 library(limma)
 library(samr)
 
-# List all experiments from the Maxquant directory
-all.exp <- list.files("Maxquant/")
-all.exp <- str_split_fixed(all.exp, "_LFQ_Maxquant_" , 2)[,1]
+# List all experiments from the FragPipe directory
+all.exp <- list.files("FragPipe/")
+all.exp <- str_split_fixed(all.exp, "_LFQ_FragPipe_" , 2)[,1]
 all.exp <- unique(all.exp)
 
 # Set seed for reproducibility
@@ -31,8 +31,8 @@ for(i.exp in all.exp){
   message("Processing experiment: ", i.exp)
   
   # Load intensity and design tables
-  exp.mar <- read.csv(file.path("Maxquant", paste0(i.exp, "_LFQ_Maxquant_dlfq_pro_intensity.tsv")), sep = "\t")
-  design <- read.csv(file.path("Maxquant", paste0(i.exp, "_LFQ_Maxquant_design.tsv")), sep = "\t")
+  exp.mar <- read.csv(file.path("FragPipe", paste0(i.exp, "_LFQ_FragPipe_dlfq_pro_intensity.tsv")), sep = "\t")
+  design <- read.csv(file.path("FragPipe", paste0(i.exp, "_LFQ_FragPipe_design.tsv")), sep = "\t")
 
   # Create condition contrasts (e.g., AB, AC)
   Contrasts <- combn(design$condition, 2, simplify = FALSE)
@@ -105,7 +105,7 @@ for(i.exp in all.exp){
         trend = TRUE,
         robust = TRUE
       )
-      saveRDS(se, file.path("Maxquant_results", paste0("LimROTS_", i.exp, "_", i.Contrasts, ".rds")))
+      saveRDS(se, file.path("FragPipe_results", paste0("LimROTS_", i.exp, "_", i.Contrasts, ".rds")))
       rm(se); gc()
 
       # ROTS
@@ -118,7 +118,7 @@ for(i.exp in all.exp){
         progress = TRUE,
         verbose = TRUE
       )
-      saveRDS(rots_results, file.path("Maxquant_results", paste0("ROTS_", i.exp, "_", i.Contrasts, ".rds")))
+      saveRDS(rots_results, file.path("FragPipe_results", paste0("ROTS_", i.exp, "_", i.Contrasts, ".rds")))
       rm(rots_results); gc()
 
       # Limma
@@ -127,7 +127,7 @@ for(i.exp in all.exp){
       contrast <- makeContrasts(contrasts = paste0("group", i.Contrasts1, "-group", i.Contrasts2), levels = design.model)
       fit <- eBayes(contrasts.fit(fit, contrast), trend = TRUE, robust = TRUE)
       limma.res <- topTable(fit, adjust = "BH", sort.by = "logFC", n = Inf)
-      saveRDS(limma.res, file.path("Maxquant_results", paste0("Limma_", i.exp, "_", i.Contrasts, ".rds")))
+      saveRDS(limma.res, file.path("FragPipe_results", paste0("Limma_", i.exp, "_", i.Contrasts, ".rds")))
       rm(limma.res); gc()
 
       # SAM
@@ -143,7 +143,7 @@ for(i.exp in all.exp){
       pval <- samr.pvalues.from.perms(sam.obj$tt, sam.obj$ttstar)
       adj.p <- p.adjust(pval, method = "BH")
       SAM.res <- cbind(logFC, pvalue = pval, adj.pvalue = adj.p)
-      saveRDS(SAM.res, file.path("Maxquant_results", paste0("SAM_", i.exp, "_", i.Contrasts, ".rds")))
+      saveRDS(SAM.res, file.path("FragPipe_results", paste0("SAM_", i.exp, "_", i.Contrasts, ".rds")))
       rm(SAM.res); gc()
 
       # t-test
@@ -155,7 +155,7 @@ for(i.exp in all.exp){
       ttest.res <- as.data.frame(ttest.res)
       ttest.res$adj.pvalue <- p.adjust(ttest.res$pval, method = "BH")
       rownames(ttest.res) <- rownames(df.temp)
-      saveRDS(ttest.res, file.path("Maxquant_results", paste0("ttest_", i.exp, "_", i.Contrasts, ".rds")))
+      saveRDS(ttest.res, file.path("FragPipe_results", paste0("ttest_", i.exp, "_", i.Contrasts, ".rds")))
       rm(ttest.res); gc()
 
       # ANOVA
@@ -166,7 +166,7 @@ for(i.exp in all.exp){
       logFC <- fit$coefficients[, 2] - fit$coefficients[, 1]
       anova.res <- data.frame(logFC = logFC, t = ord.t, P.Value = ord.p, adj.P.Val = ord.q)
       rownames(anova.res) <- rownames(df.temp)
-      saveRDS(anova.res, file.path("Maxquant_results", paste0("ANOVA_", i.exp, "_", i.Contrasts, ".rds")))
+      saveRDS(anova.res, file.path("FragPipe_results", paste0("ANOVA_", i.exp, "_", i.Contrasts, ".rds")))
       rm(anova.res); gc()
     }
   }
