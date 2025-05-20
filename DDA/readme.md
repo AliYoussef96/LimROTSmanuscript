@@ -1,7 +1,7 @@
 
 # Multi-method Proteomics Analysis (LimROTS, ROTS, Limma, SAM, t-test, ANOVA, MSstats, DEqMS, DEP)
 
-This folder contains three R script for running multiple statistical analyses on MaxQuant and FragPipe proteomics output. Supported methods include:
+This folder contains three R script for running multiple statistical analyses for each MaxQuant and FragPipe proteomics output. Supported methods include:
 
 `In FragPipe.run.r`
 
