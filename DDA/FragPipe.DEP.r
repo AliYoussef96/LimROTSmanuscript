@@ -17,12 +17,6 @@ all.exp <- unique(all.exp)
 # Set random seed
 set.seed(1597, sample.kind = "default" , kind = "default")
 
-#### #### #### #### #### #### #### #### #### 
-#### #### #### #### #### #### #### #### #### 
-#### LimROTS, ROTS, Limma, SAM, ANOVA and t-test
-#### #### #### #### #### #### #### #### #### 
-#### #### #### #### #### #### #### #### #### 
-
 # Loop through each experiment
 for(i.exp in all.exp){
     print(i.exp)
