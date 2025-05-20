@@ -1,9 +1,8 @@
 #######################################################
 # Title: Multi-method Differential Protein Analysis
-# Author: [Your Name]
+# Author: Ali Mostafa Anwar
 # Description: Applies LimROTS, ROTS, limma, SAM, t-test, and ANOVA
 #              to protein intensity data from FragPipe
-# Requirements: R (≥ 4.0), Bioconductor
 # Usage: See README.md or run line-by-line
 #######################################################
 
