@@ -24,7 +24,7 @@ This folder contains three R script for running multiple statistical analyses on
   
 - DEP
 
-## 📦 Requirements
+## Requirements
 
 Install R and the following packages:
 
@@ -34,7 +34,9 @@ BiocManager::install(c("SummarizedExperiment", "ROTS", "BiocParallel", "LimROTS"
 install.packages("samr", repos = "http://cran.us.r-project.org")
 ```
 
-To reproduce the results, download the protein expression datasets for the FragPipe software from [https://zenodo.org/records/10953347](https://zenodo.org/records/10953347). You must also create a `FragPipe_results` folder to save the results.
+## To reproduce the results
+
+Download the protein expression datasets for the FragPipe software from [https://zenodo.org/records/10953347](https://zenodo.org/records/10953347). You must also create a `FragPipe_results` folder to save the results.
 
 The same procedure applies to `Maxquant.run.r`.
 
