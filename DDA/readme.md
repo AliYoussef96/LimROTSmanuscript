@@ -38,6 +38,8 @@ install.packages("samr", repos = "http://cran.us.r-project.org")
 
 Download the protein expression datasets for the FragPipe software from [https://zenodo.org/records/10953347](https://zenodo.org/records/10953347). You must also create a `FragPipe_results` folder to save the results.
 
+For `MSstats` and `DEqMS` you should also download the raw files from: [https://zenodo.org/records/10482353](https://zenodo.org/records/10482353).
+
 The same procedure applies to `Maxquant.run.r`.
 
 The script `evaluate.r` is used to calculate the evaluation metrics used in the study. It reads the results for each method from the `FragPipe_results` (or `Maxquant_results`) folder, calculates the evaluation metrics, and saves them in a `metrics_FragPipe` folder (which should be created by the user).
