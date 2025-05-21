@@ -18,7 +18,7 @@ set.seed(1597, sample.kind = "default" , kind = "default")
         
         # Set metadata and formula for LimROTS analysis
         meta.info <- c("tool" , "Conc.", "fake.batch")
-        niter <- 500 # Number of bootstrap samples
+        niter <- 1000 # Number of bootstrap samples
         K <- nrow(assay(UPS1.Case4)) / 4 # Set the value for K based on the data size
         K <- floor(K)
         group.name <- "Conc."
