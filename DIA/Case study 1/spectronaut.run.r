@@ -12,7 +12,7 @@ library(samr)
 
 # List all experiments from the Spectronaut directory
 all.exp <- list.files("Spectronaut/")
-all.exp <- str_split_fixed(all.exp, "_LFQ_Spectronaut_" , 2)[,1]
+all.exp <- str_split_fixed(all.exp, "_DIA_" , 2)[,1]
 all.exp <- unique(all.exp)
 
 # Set seed for reproducibility
