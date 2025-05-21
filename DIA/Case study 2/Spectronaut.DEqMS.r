@@ -1,9 +1,9 @@
 # Load required libraries
-library(stringr)     # For string manipulation
-library(MSstats)     # For mass spectrometry data analysis
-library(DEqMS)       # For protein-level differential expression adjusted by peptide count
-library(dplyr)       # For data manipulation
-library(rrcovNA)     # For robust estimation with missing values
+library(stringr)   
+library(MSstats)    
+library(DEqMS)      
+library(dplyr)     
+library(rrcovNA) 
 
 # Set experiment identifier
 i.exp <- "HEof"
