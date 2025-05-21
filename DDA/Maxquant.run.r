@@ -87,7 +87,7 @@ for(i.exp in all.exp){
       # Run LimROTS
       se <- LimROTS(
         x = se,
-        niter = 500,
+        niter = 1000,
         K = floor(nrow(df.temp) / 2),
         meta.info = "group",
         BPPARAM = SnowParam(5, progressbar = TRUE),
@@ -103,7 +103,7 @@ for(i.exp in all.exp){
       rots_results <- ROTS(
         data = df.temp,
         groups = as.numeric(sample_info$group),
-        B = 500,
+        B = 1000,
         K = floor(nrow(df.temp) / 2),
         seed = 1597,
         progress = TRUE,
