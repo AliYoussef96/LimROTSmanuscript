@@ -7,7 +7,6 @@ library(ROTS)
 library(BiocParallel)
 library(rrcovNA)
 library(imputeLCMD)
-library(limma)  # (duplicate load, harmless but redundant)
 library(samr)
 
 # Read DIA-NN output files and replace 0s with NA
@@ -97,11 +96,10 @@ for(i.Contrasts in Contrasts){
         
         # Impute missing data using MinDet method
         if(any(is.na(df.temp))){
-            df.temp <-  impute.MinDet(df.temp)
+            df.temp <-  impSeq(df.temp)
             df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
         }else{
-            df.temp <- log2(df.temp+1)
-            df.temp <-  impute.MinDet(df.temp)
+            df.temp <-  impSeq(df.temp)
             df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
         }
         
