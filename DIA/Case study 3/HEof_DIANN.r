@@ -94,7 +94,7 @@ for(i.Contrasts in Contrasts){
         df.temp <- exp.mar[,colnames(exp.mar) %in% design.temp$sample_name]
         df.temp <- df.temp[,design.temp$sample_name]
         
-        # Impute missing data using MinDet method
+        # Impute missing data using impSeq method
         if(any(is.na(df.temp))){
             df.temp <-  impSeq(df.temp)
             df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
