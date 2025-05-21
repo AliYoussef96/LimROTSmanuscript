@@ -125,7 +125,7 @@ for(i.Contrasts in Contrasts){
         
         # Run LimROTS
         meta.info <- c("group" , "batches")
-        niter <- 500
+        niter <- 1000
         K <- floor(nrow(feature_info) / 2)
         group.name <- "group"
         formula.str <- "~0+group+group:batches"
