@@ -12,7 +12,7 @@ library(samr)
 
 # List all experiments from the DIANN directory
 all.exp <- list.files("DIANN/")
-all.exp <- str_split_fixed(all.exp, "_LFQ_DIANN_" , 2)[,1]
+all.exp <- str_split_fixed(all.exp, "_DIA_" , 2)[,1]
 all.exp <- unique(all.exp)
 
 # Set seed for reproducibility
