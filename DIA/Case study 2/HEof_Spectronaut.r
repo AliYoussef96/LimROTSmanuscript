@@ -207,5 +207,40 @@ for(i.Contrasts in Contrasts){
         saveRDS(anova.results, paste0("Spectronaut_results/", "ANOVA_" , i.exp , "_" , i.Contrasts, ".rds"))
         remove(anova.results)
         gc()
+
+        # run DEP
+
+        experimental_design <- design.temp[,c(3,4,5,6)]
+        colnames(experimental_design)[1] <- "label"
+        df.temp$name <- row.names(df.temp)
+        df.temp$ID <- row.names(df.temp)
+        experimental_design$replicate <- seq(1, nrow(experimental_design))
+        
+        
+        
+        data_se <- make_se(df.temp, seq(1, ncol(df.temp)-2), experimental_design)
+        
+        data_se$label <- make.names(data_se$label)
+        data_se$condition <- make.names(data_se$condition)
+        data_se$batch <- make.names(data_se$batch)
+        data_se$batch <- as.factor(data_se$batch)
+        
+        
+        data_diff_manual <- test_diff(data_se, control = i.Contrasts1 , test = i.Contrasts2,
+                                      design_formula = formula("~ 0 + condition+batch"))
+        
+        data_diff_manual.df <- elementMetadata(data_diff_manual)
+        
+        data_diff_manual.df <- data.frame(data_diff_manual.df)
+        
+        data_diff_manual.df <- data_diff_manual.df[,c(5,6,7)]
+        colnames(data_diff_manual.df) <- str_remove(colnames(data_diff_manual.df) , paste0(i.Contrasts2 , "_vs_" , i.Contrasts1) )
+        colnames(data_diff_manual.df) <- str_remove(colnames(data_diff_manual.df) , fixed("_") )
+        
+        
+        
+        saveRDS(data_diff_manual.df, paste0("Spectronaut_results/", "DEP_" , i.exp , "_" , i.Contrasts, ".rds"))
+        
+        
     }
 }
