@@ -10,7 +10,7 @@ library(samr)
 library(multiUS)
 
 # List all files in the directory and extract experiment names
-all.exp  <- list.files("../Maxquant/")
+all.exp  <- list.files("../DIANN/")
 all.exp <- str_split_fixed(all.exp, "_DIA_" , 2)[,1]
 all.exp <- unique(all.exp)
 
@@ -22,8 +22,8 @@ for(i.exp in all.exp){
     print(i.exp)
     
     # Read intensity and design files
-    exp.mar <- read.csv(paste0("../Maxquant/", i.exp , "_LFQ_Maxquant_dlfq_pro_intensity.tsv"), sep = "\t")
-    design <- read.csv(paste0("../Maxquant/", i.exp , "_LFQ_Maxquant_design.tsv"), sep = "\t")
+    exp.mar <- read.csv(paste0("../DIANN/", i.exp , "_LFQ_DIANN_dlfq_pro_intensity.tsv"), sep = "\t")
+    design <- read.csv(paste0("../DIANN/", i.exp , "_LFQ_DIANN_design.tsv"), sep = "\t")
     
     # Generate pairwise contrasts of conditions
     Contrasts <- combn(design$condition, 2, simplify = F)
@@ -100,7 +100,7 @@ for(i.exp in all.exp){
             colnames(data_diff_manual.df) <- str_remove(colnames(data_diff_manual.df) , fixed("_") )
             
             # Save results
-            saveRDS(data_diff_manual.df, paste0("Maxquant_results/", "DEP_" , i.exp , "_" , i.Contrasts, ".rds"))
+            saveRDS(data_diff_manual.df, paste0("DIANN_results/", "DEP_" , i.exp , "_" , i.Contrasts, ".rds"))
         }
     }
 }
