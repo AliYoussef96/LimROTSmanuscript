@@ -1,15 +1,13 @@
-###############################################
 # Load required libraries
-###############################################
-library(stringr)      # For string manipulation
-library(dplyr)        # For data manipulation (not directly used but good to keep for potential pipelines)
-library(ggplot2)      # Base ggplot plotting system
-library(ggstatsplot)  # For enhanced statistical plots with group comparisons
-library(ggsignif)     # To add significance bars (though ggsignif.args is passed, not used directly)
 
-###############################################
+library(stringr)     
+library(dplyr)       
+library(ggplot2)     
+library(ggstatsplot) 
+library(ggsignif)   
+
 # Load and clean up metric data
-###############################################
+
 
 # Read the CSV file containing various performance metrics for different DEA methods and experiments
 metrics <- read.csv("metrics_Maxquant//FDR_0.05")
@@ -30,10 +28,8 @@ metrics <- metrics[metrics$X %in% c(
   "pauc"
 ), ]
 
-###############################################
-# Reshape data to long format for plotting
-###############################################
 
+# Reshape data to long format for plotting
 # Convert data to long format: columns for variable (method+experiment) and value (score)
 metrics.melt <- reshape2::melt(metrics)
 
@@ -46,10 +42,7 @@ metrics.melt$exp <- sub("_.*", "", metrics.melt$exp)  # Clean any remaining suff
 
 # Set FDR value to be used in file names
 FDR <- 0.05
-
-###############################################
 # Loop through each metric and generate plots
-###############################################
 
 for(score in unique(metrics.melt$X)){
   
