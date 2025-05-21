@@ -1,7 +1,7 @@
 # Load required libraries
-library(stringr)   # For string manipulation
-library(pROC)      # For ROC and AUC calculations
-library(caret)     # For classification metrics (if needed later)
+library(stringr)  
+library(pROC)    
+library(caret) 
 
 # List files in the data folder
 data.file <- list.files("data/")
