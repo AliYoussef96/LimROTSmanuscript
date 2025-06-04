@@ -190,24 +190,19 @@ for(i.Contrasts in Contrasts){
         remove(i.test.result); gc()
         
         # run ANOVA 
-
-        design.model = model.matrix(~0+group+group:batches , data = sample_info) 
-        
-        fit1 = lmFit(df.temp,
-                     design = design.model)
-        ord.t = fit1$coefficients[, 1]/fit1$sigma/fit1$stdev.unscaled[, 1]
-        ord.p = 2*pt(abs(ord.t), fit1$df.residual, lower.tail = FALSE)
-        ord.q = p.adjust(ord.p,method = "BH")
-        log2FC = fit1$coefficients[,2]-fit1$coefficients[,1]
-        anova.results = data.frame(row.names(df.temp),
-                                   logFC=log2FC,
-                                   t=ord.t, 
-                                   P.Value=ord.p, 
-                                   adj.P.Val = ord.q)
+        anova.results <- data.frame()
+        for(i.test in seq_len(nrow(df.temp))){
+          i.test.df <- df.temp[i.test,]
+          fit = aov(as.numeric(i.test.df)~group+group:batches, data = sample_info)
+          fit <- summary(fit)[[1]]
+          fc.calc <- mean( as.numeric( i.test.df[,1:select.col.Contrasts1] ) ) - mean( as.numeric(i.test.df[,select.col.Contrasts1+1:select.col.Contrasts2]) )
+          anova.results = rbind(anova.results, data.frame(row.names = row.names(i.test.df),
+                                                          logFC=log2FC,
+                                                          P.Value=fit$`Pr(>F)`[1]) ) }
+        anova.results$adj.P.Val <- p.adjust(anova.results$pvalue, method  = "BH")
         saveRDS(anova.results, paste0("Spectronaut_results/", "ANOVA_" , i.exp , "_" , i.Contrasts, ".rds"))
         remove(anova.results)
         gc()
-
         # run DEP
 
         experimental_design <- design.temp[,c(3,4,5,6)]
