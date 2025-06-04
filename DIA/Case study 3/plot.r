@@ -40,7 +40,7 @@ metrics.melt$DEA <- str_split_fixed(metrics.melt$variable, fixed("_"), 2)[,1]
 metrics.melt$exp <- str_split_fixed(metrics.melt$variable, fixed("_"), 2)[,2]
 metrics.melt$exp <- sub("_.*", "", metrics.melt$exp)  # Clean any remaining suffix
 
-metrics.melt <- metrics.melt[metrics.melt$DEA %in% c("DEP", "Limma", "LimROTS"),]
+metrics.melt <- metrics.melt[metrics.melt$DEA %in% c("DEP", "Limma", "LimROTS", "ANOVA"),]
 
 
 # Set FDR value to be used in file names
