@@ -151,15 +151,19 @@ for(i.exp in all.exp){
       rm(ttest.res); gc()
 
       # ANOVA
-      fit <- lmFit(df.temp, design = model.matrix(~0 + group, data = sample_info))
-      ord.t <- fit$coefficients[, 1] / fit$sigma / fit$stdev.unscaled[, 1]
-      ord.p <- 2 * pt(abs(ord.t), df = fit$df.residual, lower.tail = FALSE)
-      ord.q <- p.adjust(ord.p, method = "BH")
-      logFC <- fit$coefficients[, 2] - fit$coefficients[, 1]
-      anova.res <- data.frame(logFC = logFC, t = ord.t, P.Value = ord.p, adj.P.Val = ord.q)
-      rownames(anova.res) <- rownames(df.temp)
-      saveRDS(anova.res, file.path("FragPipe_results", paste0("ANOVA_", i.exp, "_", i.Contrasts, ".rds")))
-      rm(anova.res); gc()
+        anova.results <- data.frame()
+        for(i.test in seq_len(nrow(df.temp))){
+          i.test.df <- df.temp[i.test,]
+          fit = aov(as.numeric(i.test.df)~group, data = sample_info)
+          fit <- summary(fit)[[1]]
+          fc.calc <- mean( as.numeric( i.test.df[,1:select.col.Contrasts1] ) ) - mean( as.numeric(i.test.df[,select.col.Contrasts1+1:select.col.Contrasts2]) )
+          anova.results = rbind(anova.results, data.frame(row.names = row.names(i.test.df),
+                                                          logFC=log2FC,
+                                                          P.Value=fit$`Pr(>F)`[1]) ) }
+        anova.results$adj.P.Val <- p.adjust(anova.results$pvalue, method  = "BH")
+        saveRDS(anova.results, paste0("FragPipe_results/", "ANOVA_" , i.exp , "_" , i.Contrasts, ".rds"))
+        remove(anova.results)
+        gc()
     }
   }
 }
