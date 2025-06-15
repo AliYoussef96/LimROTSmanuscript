@@ -1,3 +1,4 @@
+```r
     library(stringr)
     library(dplyr)
     library(ggplot2)
@@ -66,7 +67,7 @@
 
         
     }
-
+```
 
 ![](Plot_files/figure-markdown_strict/unnamed-chunk-1-1.png)
 
