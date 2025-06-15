@@ -69,10 +69,6 @@
     }
 ```
 
-
-![](Plot_files/Balanced_Accuracy_FDR0.05.png)
-
-
 ![](Plot_files/Balanced_Accuracy_FDR0.05.png)
 
 
