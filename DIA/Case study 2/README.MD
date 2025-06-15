@@ -68,16 +68,16 @@
     }
 
 
-![](Plot_files/Balanced_Accuracy_FDR0.05.png)
+![](Plot_files/Balanced_Accuracy_FDR0.05.jpg)
 
 
-![](Plot_files/F1_Score_FDR0.05.png)
+![](Plot_files/F1_Score_FDR0.05.jpg)
 
 
-![](Plot_files/G_Mean_FDR0.05.png)
+![](Plot_files/G_Mean_FDR0.05.jpg)
 
 
-![](Plot_files/nMCC_FDR0.05.png)
+![](Plot_files/nMCC_FDR0.05.jpg)
 
 
-![](Plot_files/pauc_FDR0.05.png)
+![](Plot_files/pauc_FDR0.05.jpg)
