@@ -194,9 +194,9 @@ for(i.Contrasts in Contrasts){
           fit <- summary(fit)[[1]]
           fc.calc <- mean( as.numeric( i.test.df[,1:select.col.Contrasts1] ) ) - mean( as.numeric(i.test.df[,select.col.Contrasts1+1:select.col.Contrasts2]) )
           anova.results = rbind(anova.results, data.frame(row.names = row.names(i.test.df),
-                                                          logFC=log2FC,
+                                                          logFC=fc.calc,
                                                           P.Value=fit$`Pr(>F)`[1]) ) }
-        anova.results$adj.P.Val <- p.adjust(anova.results$pvalue, method  = "BH")
+        anova.results$adj.P.Val <- p.adjust(anova.results$P.Value, method  = "BH")
         saveRDS(anova.results, paste0("DIANN_results/", "ANOVA_" , i.exp , "_" , i.Contrasts, ".rds"))
         remove(anova.results)
         gc()
