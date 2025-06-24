@@ -58,7 +58,7 @@
             )), 
             ggsignif.args = list(textsize = 25, tip_length = 0.01 , color = "black",
                                  vjust = 0.5 , size = 0.2 )
-        ) 
+        ) + scale_x_discrete(labels = levels(as.factor(df$DEA)))
         
         print(p)
 
