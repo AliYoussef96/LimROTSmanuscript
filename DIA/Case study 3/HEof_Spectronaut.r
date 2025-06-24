@@ -95,14 +95,11 @@ for(i.Contrasts in Contrasts){
         df.temp <- df.temp[,design.temp$sample_name]
         
         # Impute missing data using impSeq method
-        if(any(is.na(df.temp))){
-            df.temp <-  impSeq(df.temp)
-            df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
-        }else{
-            df.temp <-  impSeq(df.temp)
-            df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
-        }
-        
+
+        df.temp <-  impSeq(df.temp)
+        df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
+
+    
         # Add random effect to a subset of ECOLI proteins in 'W' batch
         add.effect <- design.temp[design.temp$batch == "W" & design.temp$condition == design.temp$condition[1],]
         ecoli <- sample(which(grepl("ECOLI", row.names(df.temp))), 500)
