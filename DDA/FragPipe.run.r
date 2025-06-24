@@ -62,7 +62,7 @@ for(i.exp in all.exp){
       # Log2 transform and impute missing
       df.temp[df.temp == 0] <- NA
       df.temp <- log2(df.temp + 1)
-      df.temp <- impSeq(df.temp)
+      df.temp <- SeqKNN(df.temp)
       df.temp <- data.frame(df.temp, check.names = FALSE)
       
       # Create sample and feature info
