@@ -24,7 +24,7 @@ for(i.exp in all.exp){
   
   # Load intensity and design tables
   exp.mar <- read.csv(file.path("DIANN", paste0(i.exp, "_DIA_DIANN_dlfq.tsv")), sep = "\t")
-  design <- read.csv(file.path("DIANN", paste0(i.exp, "_DIA_DIANN_design")), sep = "\t")
+  design <- read.csv(file.path("DIANN", paste0(i.exp, "_DIA_DIANN_design.tsv")), sep = "\t")
 
   # Create condition contrasts (e.g., AB, AC)
   Contrasts <- combn(design$condition, 2, simplify = FALSE)
