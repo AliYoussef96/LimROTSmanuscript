@@ -93,13 +93,6 @@ for(i.Contrasts in Contrasts){
         df.temp <- exp.mar[,colnames(exp.mar) %in% design.temp$sample_name]
         df.temp <- df.temp[,design.temp$sample_name]
         
-        # Handle missing values
-      df.temp[df.temp == 0] <- NA
-      df.temp <- log2(df.temp + 1)
-      df.temp <- impSeq(df.temp)
-      df.temp <- data.frame(df.temp, check.names = FALSE)
-      
-        
         # Prepare metadata
         sample_info <- data.frame(
             sample_id = colnames(df.temp),
