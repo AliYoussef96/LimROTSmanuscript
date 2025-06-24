@@ -160,7 +160,7 @@ for(i.exp in all.exp){
           anova.results = rbind(anova.results, data.frame(row.names = row.names(i.test.df),
                                                           logFC=fc.calc,
                                                           P.Value=fit$`Pr(>F)`[1]) ) }
-        anova.results$adj.P.Val <- p.adjust(anova.results$pvalue, method  = "BH")
+        anova.results$adj.P.Val <- p.adjust(anova.results$P.Value, method  = "BH")
         saveRDS(anova.results, paste0("spectronaut_resutls/", "ANOVA_" , i.exp , "_" , i.Contrasts, ".rds"))
         remove(anova.results)
         gc()
