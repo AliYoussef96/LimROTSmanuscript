@@ -63,16 +63,11 @@ for(i.exp in all.exp){
             df.temp <- df.temp[,design.temp$sample_name]
             
             # Impute missing values
-            if(any(is.na(df.temp))){
-                df.temp <- log2(df.temp+1)
-                df.temp <- seqKNNimp(df.temp)
-                df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
-            }else{
                 df.temp[df.temp == 0 ] <- NA
                 df.temp <- log2(df.temp+1)
                 df.temp <- seqKNNimp(df.temp)
                 df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
-            }
+            
             
             # Prepare experimental design
             experimental_design <- design.temp[,c(3,4,5)]
