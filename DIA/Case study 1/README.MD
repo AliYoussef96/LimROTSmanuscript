@@ -20,8 +20,6 @@
     metrics.melt$exp <- str_split_fixed(metrics.melt$variable , fixed("_"),2)[,2]
     metrics.melt$exp <- sub("_.*", "", metrics.melt$exp)
 
-    metrics.melt <- metrics.melt[metrics.melt$DEA %in% c("DEP", "Limma", "LimROTS", "ANOVA"),]
-
     FDR <- 0.05
 
     for(score in unique(metrics.melt$X)){
@@ -60,8 +58,7 @@
             )), 
             ggsignif.args = list(textsize = 25, tip_length = 0.01 , color = "black",
                                  vjust = 0.5 , size = 0.2 )
-        )  + scale_x_discrete(labels = levels(as.factor(df$DEA))) +
-          ggplot2::scale_color_manual(values = c("#00468BFF", "#ED0000FF" , "#0099B4FF", "#925E9FFF"))
+        ) 
         
         print(p)
 
