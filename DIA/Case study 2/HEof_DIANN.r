@@ -93,6 +93,10 @@ for(i.Contrasts in Contrasts){
         df.temp <- exp.mar[,colnames(exp.mar) %in% design.temp$sample_name]
         df.temp <- df.temp[,design.temp$sample_name]
         
+        df.temp <-  impSeq(df.temp)
+        df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
+
+        
         # Prepare metadata
         sample_info <- data.frame(
             sample_id = colnames(df.temp),
