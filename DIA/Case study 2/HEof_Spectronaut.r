@@ -94,14 +94,11 @@ for(i.Contrasts in Contrasts){
         df.temp <- df.temp[,design.temp$sample_name]
         
         # Handle missing values
-        if(any(is.na(df.temp))){
-            df.temp <- impute.MinDet(df.temp)
-            df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
-        } else {
-            df.temp[df.temp == 0 ] <- NA
-            df.temp <- impute.MinDet(df.temp)
-            df.temp <- data.frame(df.temp, check.names = F, check.rows = F)
-        }
+      df.temp[df.temp == 0] <- NA
+      df.temp <- log2(df.temp + 1)
+      df.temp <- impSeq(df.temp)
+      df.temp <- data.frame(df.temp, check.names = FALSE)
+      
         
         # Prepare metadata
         sample_info <- data.frame(
