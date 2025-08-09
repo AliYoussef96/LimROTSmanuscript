@@ -48,7 +48,7 @@ The `DIA/` directory includes scripts to reproduce the DIA-based analyses from C
 - **Scripts:** 
   - `spectronaut.run.r`, `spectronaut.MSstats.r`, `spectronaut.DEqMS.r`, and `spectronaut.DEP.r`
   - `DIANN.run.r`, `DIANN.MSstats.r`, `DIANN.DEqMS.r`, and `DIANN.DEP.r`
-- **Input Data:** Same datasets as above, from [Zenodo (DOI:10.5281/zenodo.10953347)](https://zenodo.org/records/10953347).
+- **Input Data:** Same datasets as above, from https://zenodo.org/records/10482353 and https://zenodo.org/records/10953347.
 - **Output Folders:** 
   - For Spectronaut: `spectronaut_results/`
   - For DIA-NN: `DIANN_results/`
