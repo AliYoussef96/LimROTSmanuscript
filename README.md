@@ -25,7 +25,7 @@ The `DDA/` directory contains R scripts for reproducing all results from the man
 ### 1. Running Benchmark Methods
 
 - **Script:** `FragPipe.run.r`, `FragPipe.MSstats.r`, and `FragPipe.DEqMS.r` , and `FragPipe.DEP.r`
-- **Input Data:** Download the required FragPipe-based protein expression datasets from [Zenodo (DOI:10.5281/zenodo.10953347)](https://zenodo.org/records/10953347).
+- **Input Data:** Download the expression matrix from https://zenodo.org/records/10953347 and the other required files (such as design.tsv) from https://zenodo.org/records/10482353.
 - **Output Folder:** Create a folder named `FragPipe_results/` to store the method outputs.
 
 > 📌 The same instructions apply to `Maxquant.run.r`, using a `Maxquant_results/` output directory.
