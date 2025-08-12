@@ -73,8 +73,8 @@ for(i.Contrasts in Contrasts){
     # Generate contrast vector for MSstats
     comparison_r <- levels(QuantData$ProteinLevelData$GROUP )
     comparison_r <- ifelse(comparison_r == i.Contrasts1.n , 0.5,
-                           ifelse(comparison_r == i.Contrasts2.n , 0.5 , 
-                                  ifelse(comparison_r == i.Contrasts1.w , -0.5 , 
+                           ifelse(comparison_r == i.Contrasts2.n , -0.5 , 
+                                  ifelse(comparison_r == i.Contrasts1.w , 0.5 , 
                                          ifelse(comparison_r == i.Contrasts2.w, -0.5, 0))))
     
     comparison <- matrix(comparison_r, nrow=1)
