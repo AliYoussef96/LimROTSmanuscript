@@ -3,9 +3,8 @@
 ## Overview
 
 The pipeline implements statistical methods optimized for HEof data analysis:
-- LimROTS (Reproducibility-Optimized Test Statistic with limma-trend)
-- Limma (Linear Models for Microarray and RNA-Seq Data)
-- DEqMS (Differential Expression analysis of quantitative Mass Spectrometry data)
+- LimROTS
+- Limma
 
 ## Directory Structure
 
@@ -21,7 +20,7 @@ Note: This case study uses the built-in UPS1.Case4 dataset which is loaded direc
 ## Requirements
 
 ### Software Requirements
-1. R version ≥ 4.0.0
+1. R version ≥ 4.5.0
 2. Required R packages (see below)
 
 ### R Package Dependencies
@@ -45,7 +44,6 @@ BiocManager::install(c(
     "SummarizedExperiment",
     "BiocParallel",
     "LimROTS",
-    "DEqMS",
     "limma"
 ))
 ```
@@ -84,14 +82,7 @@ The UPS1.Case4 dataset is a SummarizedExperiment object containing:
 
 ## Running the Pipeline
 
-1. Install required packages:
-```r
-source("install_dependencies.r")  # If provided
-```
-
-2. Place input files in the data directory
-
-3. Execute the analysis pipeline:
+4. Execute the analysis pipeline:
 ```r
 source("run_analysis_pipeline.r")
 ```
@@ -130,18 +121,4 @@ The pipeline generates three types of output:
    - Partial Area Under Curve (pAUC)
    - Fowlkes-Mallows Index
 
-3. Plots (in /Plot_files):
-   - Performance metric visualizations
-   - Comparison plots
-   - Summary figures
-
-## Performance Metrics
-
-The pipeline evaluates method performance using:
-- F1 Score: Balance between precision and recall
-- nMCC: Normalized Matthews Correlation Coefficient
-- G-Mean: Geometric mean of sensitivity and specificity
-- Balanced Accuracy: Average of sensitivity and specificity
-- pAUC: Partial Area Under the ROC Curve
-- Fowlkes-Mallows Index: Geometric mean of precision and recall
 
