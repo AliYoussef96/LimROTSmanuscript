@@ -1,6 +1,4 @@
-# DIA Proteomics Analysis Pipeline
-
-This repository contains a comprehensive pipeline for analyzing DIA proteomics data from either DIA-NN or Spectronaut, implementing multiple statistical methods for differential expression analysis.
+# DIA Proteomics Analysis Pipeline DIA Case Study 1
 
 ## Overview
 
@@ -42,8 +40,7 @@ The pipeline implements nine different statistical methods specifically optimize
 ## Requirements
 
 ### Software Requirements
-1. R version ≥ 4.0.0
-2. DIA-NN (≥ 1.8) or Spectronaut (≥ 15.0) for raw data processing
+1. R version ≥ 4.5
 
 ### R Package Dependencies
 
@@ -86,7 +83,7 @@ install.packages(c(
 
 ### Data Organization
 
-Example datasets can be downloaded from: [Download Link To Be Added]
+Example datasets can be downloaded from: https://zenodo.org/records/17102211
 
 1. DIA-NN data requirements:
    - Place DIA-NN report.tsv files in `/DIANN/{experiment}/` directories
@@ -284,6 +281,4 @@ Common issues and solutions:
 If you use this pipeline in your research, please cite:
 [Citation information to be added]
 
-## License
 
-[License information to be added]
