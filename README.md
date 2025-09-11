@@ -9,19 +9,19 @@
    - DIA Analysis (Case Studies 1-4)
    - UPenn Cohort Analysis
 
-Note: All required data files are included in their respective directories.
+Note: All the required data files and code, included in their respective directories, are available for direct download from https://zenodo.org/records/17102211.
 
 ## Dependencies
 
 ```R
 # Install required R packages
-install.packages(c("stringr", "limma", "ggplot2", "dplyr" , "samr"))
-BiocManager::install(c("DEP", "DEqMS", "MSstats", "LimROTS" ,"SummarizedExperiment"))
+install.packages(c("stringr", "ggplot2", "dplyr" , "samr"))
+BiocManager::install(c("DEP", "limma" ,"DEqMS", "MSstats", "LimROTS" ,"SummarizedExperiment"))
 ```
 
 ## Overview
 
-This repository provides all necessary R scripts to reproduce the analyses presented in the LimROTS manuscript. It includes a comprehensive comparison of differential expression methods applied to both Data-Dependent Acquisition (DDA) and Data-Independent Acquisition (DIA) proteomics data, as well as a real-world case study using the UPenn cohort.
+This repository provides all necessary R scripts to reproduce the analyses presented in the LimROTS manuscript.
 
 ### Methods Compared
 
@@ -54,8 +54,6 @@ This script will automatically:
 2. Execute all statistical analyses
 3. Perform evaluations
 4. Generate result metrics
-
-> 📌 While individual scripts (`FragPipe.run.r`, `Maxquant.run.r`, etc.) are available, we recommend using `run_analysis_pipeline.r` for the complete workflow.
 
 ### Output Structure
 
@@ -101,8 +99,6 @@ Each `run_analysis_pipeline.r` script will automatically:
 2. Run all statistical methods (MSstats, DEqMS, DEP)
 3. Perform evaluations
 4. Generate result metrics
-
-> 📌 While individual scripts exist, we recommend using `run_analysis_pipeline.r` for the complete workflow in each case study.
 
 ### Output Structure
 
