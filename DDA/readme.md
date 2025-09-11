@@ -1,7 +1,6 @@
 
-# Proteomics Differential Expression Analysis Pipeline
+# Proteomics Differential Expression Analysis Pipeline DDA Case Study 1
 
-This repository contains a comprehensive pipeline for analyzing proteomics data from either MaxQuant or FragPipe, implementing multiple statistical methods for differential expression analysis.
 
 ## Overview
 
@@ -39,7 +38,7 @@ The pipeline implements nine different statistical methods:
 
 ## Requirements
 
-1. R version ≥ 4.0.0
+1. R version 4.5.0
 2. Required R packages:
 
 ```r
@@ -74,7 +73,7 @@ install.packages("samr", repos = "http://cran.us.r-project.org")
 
 ### Data Organization
 
-The dataset can be downloaded from: [Download Link To Be Added]
+The dataset can be downloaded from: [https://zenodo.org/records/17102211]
 
 1. Input files should be organized in `Maxquant/` or `FragPipe/` directories at the same level as your analysis scripts. These directories can be created in your working directory, or you can specify their location in the pipeline configuration.
 
@@ -96,11 +95,6 @@ The dataset can be downloaded from: [Download Link To Be Added]
      - sample_name: Sample identifiers
      - condition: Experimental conditions (single characters, e.g., 'A', 'B')
      - replicate: Replicate numbers
-
-3. data.info.csv format:
-   - Required columns:
-     - Dataset: Experiment identifiers
-     - ID: Unique experiment identifiers
 
 ## Running the Pipeline
 
@@ -165,7 +159,6 @@ Common issues and solutions:
    - Verify file naming follows the required format
 
 3. Package installation issues:
-   - Ensure R version ≥ 4.0.0
    - Install Bioconductor packages using BiocManager
    - Check system dependencies for all packages
 
@@ -174,7 +167,5 @@ Common issues and solutions:
 If you use this pipeline in your research, please cite:
 [Citation information to be added]
 
-## License
 
-[License information to be added]
 
