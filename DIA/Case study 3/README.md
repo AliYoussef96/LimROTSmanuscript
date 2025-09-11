@@ -1,6 +1,5 @@
 # DIA Proteomics Analysis Pipeline - Case Study 3
 
-This repository contains a pipeline for analyzing DIA proteomics data from either DIA-NN or Spectronaut, focusing on analyzing HE-overlapped fragments data using multiple statistical methods.
 
 ## Overview
 
@@ -37,8 +36,7 @@ The pipeline implements multiple statistical methods for differential expression
 ## Requirements
 
 ### Software Requirements
-1. R version ≥ 4.0.0
-2. DIA-NN (≥ 1.8) or Spectronaut (≥ 15.0) for raw data processing
+1. R version ≥ 4.5.0
 
 ### R Package Dependencies
 
@@ -126,3 +124,4 @@ The pipeline evaluates:
 - Balanced Accuracy
 - Partial Area Under Curve (pAUC)
 - Fowlkes-Mallows Index
+
