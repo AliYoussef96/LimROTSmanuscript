@@ -1,7 +1,5 @@
 # DIA Proteomics Analysis Pipeline - Case Study 4
 
-This repository contains a pipeline for analyzing proteomics data using HE-overlapped fragments (HEof) approach with a focus on differential expression analysis using multiple statistical methods.
-
 ## Overview
 
 The pipeline implements statistical methods optimized for HEof data analysis:
@@ -146,3 +144,4 @@ The pipeline evaluates method performance using:
 - Balanced Accuracy: Average of sensitivity and specificity
 - pAUC: Partial Area Under the ROC Curve
 - Fowlkes-Mallows Index: Geometric mean of precision and recall
+
