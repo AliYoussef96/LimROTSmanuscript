@@ -1,5 +1,24 @@
 # LimROTS Manuscript: Reproducible Analysis Guide
 
+## Quick Start Guide
+
+1. Clone this repository
+2. Install required R packages (see Dependencies section below)
+3. Run your chosen analysis:
+   - DDA Analysis
+   - DIA Analysis (Case Studies 1-4)
+   - UPenn Cohort Analysis
+
+Note: All required data files are included in their respective directories.
+
+## Dependencies
+
+```R
+# Install required R packages
+install.packages(c("stringr", "limma", "ggplot2", "dplyr" , "samr"))
+BiocManager::install(c("DEP", "DEqMS", "MSstats", "LimROTS" ,"SummarizedExperiment"))
+```
+
 ## Overview
 
 This repository provides all necessary R scripts to reproduce the analyses presented in the LimROTS manuscript. It includes a comprehensive comparison of differential expression methods applied to both Data-Dependent Acquisition (DDA) and Data-Independent Acquisition (DIA) proteomics data, as well as a real-world case study using the UPenn cohort.
@@ -20,50 +39,77 @@ This repository provides all necessary R scripts to reproduce the analyses prese
 
 ## DDA Analysis
 
-The `DDA/` directory contains R scripts for reproducing all results from the manuscript's DDA-based proteomics analysis.
+The `DDA/` directory contains R scripts for reproducing all results from the manuscript's DDA-based proteomics analysis. See `DDA/readme.md` for detailed information about the DDA analysis workflow.
 
-### 1. Running Benchmark Methods
+### Running the Analysis
 
-- **Script:** `FragPipe.run.r`, `FragPipe.MSstats.r`, and `FragPipe.DEqMS.r` , and `FragPipe.DEP.r`
-- **Input Data:** Download the expression matrix from https://zenodo.org/records/10953347 and the other required files (such as design.tsv) from https://zenodo.org/records/10482353.
-- **Output Folder:** Create a folder named `FragPipe_results/` to store the method outputs.
+The simplest way to run the complete DDA analysis is to use the automated pipeline:
+```R
+cd DDA
+Rscript run_analysis_pipeline.r
+```
 
-> 📌 The same instructions apply to `Maxquant.run.r`, using a `Maxquant_results/` output directory.
+This script will automatically:
+1. Run all benchmark methods (FragPipe and MaxQuant)
+2. Execute all statistical analyses
+3. Perform evaluations
+4. Generate result metrics
 
-### 2. Evaluation of Results
+> 📌 While individual scripts (`FragPipe.run.r`, `Maxquant.run.r`, etc.) are available, we recommend using `run_analysis_pipeline.r` for the complete workflow.
 
-- **Script:** `evaluate.r`
-- **Function:** Calculates evaluation metrics across all methods.
-- **Input:** Method outputs stored in `FragPipe_results/` or `Maxquant_results/`.
-- **Output Folder:** Metrics are saved in `metrics_FragPipe/` (or `metrics_Maxquant/`, which should be created manually).
+### Output Structure
+
+- Results will be stored in:
+  - `FragPipe_results/` and `Maxquant_results/` for analysis outputs
+  - `metrics_FragPipe/` and `metrics_Maxquant/` for evaluation metrics
+  (All folders are created automatically)
 
 ---
 
 ## DIA Analysis
 
-The `DIA/` directory includes scripts to reproduce the DIA-based analyses from Case Studies 1 through 4.
+The `DIA/` directory includes scripts to reproduce the DIA-based analyses from Case Studies 1 through 4. Each case study has its own detailed documentation:
+- Case Study 1: See `DIA/Case study 1/README.MD`
+- Case Study 2: See `DIA/Case study 2/README.MD`
+- Case Study 3: See `DIA/Case study 3/README.md`
+- Case Study 4: See `DIA/Case study 4/README.md`
 
-### 1. Running Benchmark Methods
+### Running the Analyses
 
-- **Scripts:** 
-  - `spectronaut.run.r`, `spectronaut.MSstats.r`, `spectronaut.DEqMS.r`, and `spectronaut.DEP.r`
-  - `DIANN.run.r`, `DIANN.MSstats.r`, `DIANN.DEqMS.r`, and `DIANN.DEP.r`
-- **Input Data:** Same datasets as above, from https://zenodo.org/records/10482353 and https://zenodo.org/records/10953347.
-- **Output Folders:** 
-  - For Spectronaut: `spectronaut_results/`
-  - For DIA-NN: `DIANN_results/`
+Each case study can be run using its automated pipeline script:
 
-> 📌 Ensure these folders are created before running the scripts.
+```R
+# Case Study 1
+cd "DIA/Case study 1"
+Rscript run_analysis_pipeline.r
 
-### 2. Evaluation of Results
+# Case Study 2
+cd "DIA/Case study 2"
+Rscript run_analysis_pipeline.r
 
-- **Script:** `evaluate.r`
-- **Function:** Computes performance metrics for each method and saves results.
-- **Output Folder:** 
-  - For Spectronaut: `metrics_spectronaut/`
-  - For DIA-NN: `metrics_DIANN/`
+# Case Study 3
+cd "DIA/Case study 3"
+Rscript run_analysis_pipeline.r
 
-Repeat the same procedure for all four DIA case studies.
+# Case Study 4
+cd "DIA/Case study 4"
+Rscript run_analysis_pipeline.r
+```
+
+Each `run_analysis_pipeline.r` script will automatically:
+1. Process both DIA-NN and Spectronaut data
+2. Run all statistical methods (MSstats, DEqMS, DEP)
+3. Perform evaluations
+4. Generate result metrics
+
+> 📌 While individual scripts exist, we recommend using `run_analysis_pipeline.r` for the complete workflow in each case study.
+
+### Output Structure
+
+Results for each case study will be stored in:
+- `spectronaut_results/` and `DIANN_results/` for analysis outputs
+- `metrics_spectronaut/` and `metrics_DIANN/` for evaluation metrics
+(All folders are created automatically)
 
 ---
 
@@ -83,8 +129,8 @@ Repeat the same procedure for all four DIA case studies.
 
 ## Notes
 
-- Please ensure that all required folders (`*_results/`, `metrics_*`) are created prior to running the scripts.
-- All R scripts assume that the required dependencies and packages are installed.
+- All output folders are created automatically by the scripts
+- All R scripts assume that the required dependencies and packages are installed
 
 ---
 
