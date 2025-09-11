@@ -1,7 +1,5 @@
 # DIA Proteomics Analysis Pipeline - Case Study 2
 
-This repository contains a comprehensive pipeline for analyzing DIA proteomics data from either DIA-NN or Spectronaut, implementing multiple statistical methods for differential expression analysis with a focus on batch effect handling.
-
 ## Overview
 
 The pipeline implements multiple statistical methods optimized for DIA data with batch effect consideration:
@@ -43,8 +41,7 @@ The pipeline implements multiple statistical methods optimized for DIA data with
 ## Requirements
 
 ### Software Requirements
-1. R version ≥ 4.0.0
-2. DIA-NN (≥ 1.8) or Spectronaut (≥ 15.0) for raw data processing
+1. R version ≥ 4.5.0
 
 ### R Package Dependencies
 
@@ -89,7 +86,7 @@ install.packages(c(
 
 ### Data Organization
 
-Example datasets can be downloaded from: [Download Link To Be Added]
+Example datasets can be downloaded from: [https://zenodo.org/records/17102211]
 
 1. DIA-NN data requirements:
    - Place DIA-NN quantification files in `/DIANN/` directory:
@@ -138,78 +135,3 @@ The analysis generates several types of outputs:
    - Method comparison plots
    - Batch effect visualization
 
-## Example Plots
-
-Below are example plots generated from the analysis showing the performance metrics for different methods:
-
-
-    metrics.melt <- reshape2::melt(metrics)
-
-    ## Using X as id variables
-
-    metrics.melt$DEA <- str_split_fixed(metrics.melt$variable , fixed("_"),2)[,1]
-    metrics.melt$exp <- str_split_fixed(metrics.melt$variable , fixed("_"),2)[,2]
-    metrics.melt$exp <- sub("_.*", "", metrics.melt$exp)
-
-    metrics.melt <- metrics.melt[metrics.melt$DEA %in% c("DEP", "Limma", "LimROTS", "ANOVA"),]
-
-    FDR <- 0.05
-
-    for(score in unique(metrics.melt$X)){
-        
-        df <-  metrics.melt[metrics.melt$X == score,]
-        
-        df[is.na(df)] <- 0
-        
-        p <- ggbetweenstats(
-            data = df,
-            x = DEA,
-            y = value,
-            type = "robust",
-            centrality.type = "nonparametric" ,
-            p.adjust.method = "BH",
-            pairwise.display = "none",
-            bf.message = FALSE,
-            results.subtitle = FALSE,
-            package = "ggsci",
-            palette = "lanonc_lancet",
-            ylab = score,
-            centrality.label.args = list(size = 4.5, segment.linetype = 1,
-                                         nudge_x = 0.25),
-            ggplot.component = list(  theme(
-                axis.text.x = element_text(color = "black", face = "bold", size = 12),
-                axis.text.y = element_text(color = "black", face = "bold",  size = 12),
-                axis.text = element_text(color = "black", face = "bold",  size = 12),
-                axis.title.y.left  = element_text(color = "black", face = "bold", size = 17),
-                axis.title.x.bottom   = element_text(color = "black", face = "bold", size = 17),
-                text = element_text(color = "black", face = "bold"),
-                legend.title = element_text(color = "black", face = "bold", size = 13.5),
-                legend.text = element_text(color = "black", face = "bold", size = 13.5),
-                axis.title.y.right = element_blank(), 
-                axis.text.y.right = element_blank(), 
-                axis.ticks.y.right = element_blank()
-            )), 
-            ggsignif.args = list(textsize = 25, tip_length = 0.01 , color = "black",
-                                 vjust = 0.5 , size = 0.2 )
-        )  + scale_x_discrete(labels = levels(as.factor(df$DEA))) +
-          ggplot2::scale_color_manual(values = c("#00468BFF", "#ED0000FF" , "#0099B4FF", "#925E9FFF"))
-        
-        print(p)
-
-        
-    }
-```
-
-![](Plot_files/Balanced_Accuracy_FDR0.05.jpg)
-
-
-![](Plot_files/F1_Score_FDR0.05.jpg)
-
-
-![](Plot_files/G_Mean_FDR0.05.jpg)
-
-
-![](Plot_files/nMCC_FDR0.05.jpg)
-
-
-![](Plot_files/pauc_FDR0.05.jpg)
