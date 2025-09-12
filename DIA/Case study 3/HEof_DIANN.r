@@ -210,6 +210,7 @@ message("Beginning differential expression analysis...")
 for(i.Contrasts in Contrasts) {
     message(sprintf("Processing contrast: %s", i.Contrasts))
     
+    tryCatch({
         # Parse contrast conditions
         i.Contrasts1 <- str_split(i.Contrasts, "")[[1]][1]
         i.Contrasts2 <- str_split(i.Contrasts, "")[[1]][2]
@@ -254,6 +255,89 @@ for(i.Contrasts in Contrasts) {
         )
         rownames(feature_info) <- feature_info$protein_id
         
+        # Create SummarizedExperiment object
+        se <- SummarizedExperiment(
+            assays = list(protein.exp = df.temp),
+            colData = sample_info,
+            rowData = feature_info 
+        )
+        
+        # Set parameters and run LimROTS
+        meta.info <- c("group" , "batches")
+        niter <- 1000
+        K <- floor(nrow(feature_info) / 2)
+        group.name <- "group"
+        formula.str <- "~0+group+group:batches"
+        
+        se <- LimROTS(
+            x = se,
+            niter = niter, K = K, meta.info = meta.info,
+            BPPARAM  = MulticoreParam(THREADS, progressbar = T), group.name = group.name,
+            formula.str = formula.str, trend = TRUE,
+            robust = TRUE, permutating.group = FALSE
+        )
+        
+        saveRDS(se, paste0("DIANN_results/", "LimROTS_" , i.exp , "_" , i.Contrasts, ".rds"))
+        remove(se)
+        gc()
+        
+        # Run ROTS
+        rots_results <- ROTS(data = df.temp , groups = as.numeric(sample_info$group), B = niter, K = K, 
+                             seed = 1597, progress = TRUE, verbose = TRUE)
+        
+        saveRDS(rots_results, paste0("DIANN_results/", "ROTS_" , i.exp , "_" , i.Contrasts, ".rds"))
+        remove(rots_results)
+        gc()
+        
+        # Run limma differential expression analysis
+        sample_info$group <- as.factor(design.temp$condition) 
+        design.model = model.matrix(~0+group+group:batches , data = sample_info) 
+        colnames(design.model) <- make.names(colnames(design.model))
+        
+        fit1 = lmFit(df.temp, design = design.model)
+        cont <- makeContrasts(contrasts =  paste0( "group", i.Contrasts1 , "-" , "group" , i.Contrasts2), levels = design.model)
+        fit2 = contrasts.fit(fit1,contrasts = cont)
+        fit3 <- eBayes(fit2, trend = T, robust = T)
+        limma.results = topTable(fit3, adjust="BH", sort.by = 'logFC', n=Inf)
+        
+        saveRDS(limma.results, paste0("DIANN_results/", "Limma_" , i.exp , "_" , i.Contrasts, ".rds"))
+        remove(limma.results)
+        gc()
+        
+        # Run SAM analysis
+        data <- list(x = as.matrix(df.temp), y = sample_info$group,
+                     geneid = feature_info$protein_id,
+                     genenames = feature_info$protein_id, logged2 = TRUE)
+        
+        samr.obj <- samr(data, resp.type = "Two class unpaired", nperms = 100)
+        logFC <- log2(samr.obj$foldchange)
+        pvalue <- data.frame(samr.pvalues.from.perms(samr.obj$tt, samr.obj$ttstar))
+        adj.pvalue <- p.adjust(pvalue$samr.pvalues.from.perms.samr.obj.tt..samr.obj.ttstar., method = "BH")
+        SAM.results <- cbind(logFC, pvalue, adj.pvalue)
+        
+        saveRDS(SAM.results, paste0("DIANN_results/", "SAM_" , i.exp , "_" , i.Contrasts, ".rds"))
+        remove(SAM.results)
+        gc()
+
+        # run t-test
+        i.test.result <- data.frame()
+        for(i.test in seq_len(nrow(df.temp))){
+            i.test.df <- df.temp[i.test,]
+            pvalue <- t.test(formula = as.numeric(i.test.df[1,])~sample_info$group)$p.value
+            fc.calc <- mean( as.numeric( i.test.df[,1:select.col.Contrasts1] ) ) - mean( as.numeric(i.test.df[,select.col.Contrasts1+1:select.col.Contrasts2]) )
+            
+            i.test.result <- rbind(i.test.result, data.frame(row.names = row.names(i.test.df), 
+                                                             pvalue = pvalue , 
+                                                             fc.calc = fc.calc))
+        }
+        
+        i.test.result$adj.pvalue <- p.adjust(i.test.result$pvalue, method = "BH")
+        
+        
+        saveRDS(i.test.result, paste0("DIANN_results/", "ttest_" , i.exp , "_" , i.Contrasts, ".rds"))
+        remove(i.test.result)
+        gc()
+        
         # run ANOVA
         anova.results <- data.frame()
         for(i.test in seq_len(nrow(df.temp))){
@@ -271,13 +355,40 @@ for(i.Contrasts in Contrasts) {
         # run DEP
 
 
-
+        experimental_design <- design.temp[,c(3,4,5,6)]
+        colnames(experimental_design)[1] <- "label"
+        df.temp$name <- row.names(df.temp)
+        df.temp$ID <- row.names(df.temp)
+        experimental_design$replicate <- seq(1, nrow(experimental_design))   
+        data_se <- make_se(df.temp, seq(1, ncol(df.temp)-2), experimental_design)
+        
+        data_se$label <- make.names(data_se$label)
+        data_se$condition <- make.names(data_se$condition)
+        data_se$batch <- make.names(data_se$batch)
+        data_se$batch <- as.factor(data_se$batch)
+        
+        
+        data_diff_manual <- test_diff(data_se, control = i.Contrasts1 , test = i.Contrasts2,
+                                      design_formula = formula("~ 0 + condition+batch"))
+        
+        data_diff_manual.df <- elementMetadata(data_diff_manual)
+        
+        data_diff_manual.df <- data.frame(data_diff_manual.df)
+        
+        data_diff_manual.df <- data_diff_manual.df[,c(5,6,7)]
+        colnames(data_diff_manual.df) <- str_remove(colnames(data_diff_manual.df) , paste0(i.Contrasts2 , "_vs_" , i.Contrasts1) )
+        colnames(data_diff_manual.df) <- str_remove(colnames(data_diff_manual.df) , fixed("_") )
+        
+        saveRDS(data_diff_manual.df, paste0("DIANN_results/", "DEP_" , i.exp , "_" , i.Contrasts, ".rds"))
+        
  
     } else {
         warning(sprintf("Insufficient samples for contrast %s: %d vs %d samples", 
                        i.Contrasts, select.col.Contrasts1, select.col.Contrasts2))
     }
-
+}, error = function(e) {
+    warning(sprintf("Analysis failed for contrast %s: %s", i.Contrasts, e$message))
+})
 }
 
 message("Differential expression analysis completed.")
